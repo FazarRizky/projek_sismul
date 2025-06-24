@@ -39,9 +39,11 @@ def process_video(uploaded_file):
         progress_bar.progress(25)
         
         ffmpeg.input(input_filepath).output(
-            mjpeg_output, 
-            vcodec='mjpeg'
-        ).overwrite_output().run(quiet=True)
+            mjpeg_output,
+            vcodec='mjpeg',
+            vf='scale=1280:-2',  # Resize → 1280px width, keep aspect ratio
+            qscale=3  # kualitas → semakin tinggi → semakin kecil → semakin cepat encode
+        ).overwrite_output().run(cmd="ffmpeg", quiet=True)
         
         progress_bar.progress(50)
         
